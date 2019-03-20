@@ -6,10 +6,12 @@
 package command.library;
 
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
-import helpers.TestHelper;
+
 import filesystem.File;
+import helpers.TestHelper;
 
 public class CmdCopyFileTest extends CmdTest {
 	
@@ -22,23 +24,20 @@ public class CmdCopyFileTest extends CmdTest {
 		// Add all commands which are necessary to execute this unit test
 		// Important: Other commands are not available unless added here	
         newFileName = "testFile";
-        this.commandInvoker.addCommand(new CmdMkFile(newFileName, this.drive));
-        executeCommand("mkfile " + newFileName);
-        this.commandInvoker.addCommand(new CmdCopyFile(newFileName, this.drive));
+        this.commandInvoker.addCommand(new CmdCopyFile("copy", this.drive));
 	}
 
     @Test
     public void CmdCopyFile_CreatesNewFile()
     {
         // given
-        final String copyFileName = "copytestFile";
+        final String copyFileName = "copyFileInRoot1";
 
         // when
-        executeCommand("copyfile " + newFileName);
+        executeCommand("copy " + "FileInRoot1");
 
         // then
-        assertEquals(numbersOfFilesBeforeTest + 2, drive.getCurrentDirectory().getNumberOfContainedFiles());
-        TestHelper.assertOutputIsEmpty(testOutput);
+        assertEquals(numbersOfFilesBeforeTest + 1, drive.getCurrentDirectory().getNumberOfContainedFiles());
         File copyFile = TestHelper.getFile(drive, drive.getCurrentDirectory().getPath(), copyFileName);
         assertNotNull(copyFile);
     }

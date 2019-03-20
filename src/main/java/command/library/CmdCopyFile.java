@@ -1,7 +1,11 @@
 package command.library;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import command.framework.Command;
 import filesystem.File;
+import filesystem.FileSystemItem;
 import interfaces.IDrive;
 import interfaces.IOutputter;
 
@@ -14,10 +18,14 @@ public class CmdCopyFile extends Command {
 	@Override
 	public void execute(IOutputter outputter) {
 		String fileName = this.getParameterAt(0);
-		String fileContent = this.getParameterAt(1);
-		File newFile = new File(fileName, fileContent);
-		File copyFile = new File("copy" + fileName, fileContent);
-		this.getDrive().getCurrentDirectory().add(newFile);
-		this.getDrive().getCurrentDirectory().add(copyFile);
+		ArrayList<FileSystemItem> files = new ArrayList<>(this.getDrive().getCurrentDirectory().getContent());
+		
+		for (Iterator<FileSystemItem> iterator = files.iterator(); iterator.hasNext();) {
+			File fileSystemItem = (File) iterator.next();
+			if (fileSystemItem.getName().equals(fileName)) {
+				File copyFile = new File("copy" + fileName, fileSystemItem.getFileContent());
+				this.getDrive().getCurrentDirectory().add(copyFile);
+			}
+		}
 	}
 }
