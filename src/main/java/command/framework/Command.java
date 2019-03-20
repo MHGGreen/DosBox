@@ -66,7 +66,10 @@ public abstract class Command {
      */
     protected boolean checkNumberOfParameters(int numberOfParametersEntered)
     {
-        return true;
+    	if (numberOfParametersEntered>0)
+    		return true;
+    	else
+    		return false;
     }
 
 	/**<b>Can be overwritten</b> by the concrete commands if at least the value of one parameter must be checked.
