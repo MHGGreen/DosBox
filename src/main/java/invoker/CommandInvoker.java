@@ -67,8 +67,10 @@ public class CommandInvoker implements IExecuteCommand {
 					return;
 				}
 			}
-			outputter.printLine("\'" + cmdName + "\' is not recognized as an internal or external command,");
-			outputter.printLine("operable program or batch file.");
+			if (!"".equals(cmdName)) {
+				outputter.printLine("\'" + cmdName + "\' is not recognized as an internal or external command,");
+				outputter.printLine("operable program or batch file.");
+			}
 		}
 		catch(Exception e) {
 			if(e.getMessage() != null) {
