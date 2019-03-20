@@ -17,7 +17,7 @@ public class CmdDel extends Command {
 	@Override
 	public void execute(IOutputter outputter) {
 		String fileName = this.getParameterAt(0);
-		ArrayList<FileSystemItem> files = new ArrayList<>(this.getDrive().getCurrentDirectory().getContent());
+		ArrayList<FileSystemItem> files = new ArrayList<FileSystemItem>(this.getDrive().getCurrentDirectory().getContent());
 		
 		for (Iterator<FileSystemItem> iterator = files.iterator(); iterator.hasNext();) {
 			FileSystemItem fileSystemItem = (FileSystemItem) iterator.next();
