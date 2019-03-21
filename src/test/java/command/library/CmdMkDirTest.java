@@ -38,6 +38,17 @@ public class CmdMkDirTest extends CmdTest {
         assertEquals(numbersOfDirectoriesBeforeTest + 1, drive.getRootDirectory().getNumberOfContainedDirectories());
         TestHelper.assertOutputIsEmpty(testOutput);
     }
+    
+    @Test
+    public void CmdMkDir_CreateNewDirectory_WitSameName_DirNotAdded()
+    {
+        final String testDirName = "subDir1";
+        executeCommand("mkdir " + testDirName);
+        Directory testDirectory = TestHelper.getDirectory(drive, Path.Combine(drive.getDriveLetter(), testDirName),
+                                                          testDirName);
+        assertSame(drive.getRootDirectory(), testDirectory.getParent());
+        assertEquals(numbersOfDirectoriesBeforeTest, drive.getRootDirectory().getNumberOfContainedDirectories());
+    }
 
     @Test
     public void CmdMkDir_CreateNewDirectory_NewDirectoryIsAddedToCorrectLocation()

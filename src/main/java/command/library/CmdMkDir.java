@@ -9,6 +9,7 @@ import interfaces.IDrive;
 import interfaces.IOutputter;
 import command.framework.Command;
 import filesystem.Directory;
+import fileutils.FileUtils;
 
 class CmdMkDir extends Command {
     private static final String PARAMETER_CONTAINS_BACKLASH = "At least one parameter denotes a path rather than a directory name.";
@@ -48,12 +49,16 @@ class CmdMkDir extends Command {
     public void execute(IOutputter outputter) {
         for(int i=0 ; i<getParameterCount() ; i++)
         {
-            CreateDirectory(getParameterAt(i), this.getDrive());
+            CreateDirectory(outputter, getParameterAt(i), this.getDrive());
         }
     }
 
-    private static void CreateDirectory(String newDirectoryName, IDrive drive) {
+    private static void CreateDirectory(IOutputter outputter, String newDirectoryName, IDrive drive) {
         Directory newDirectory = new Directory(newDirectoryName);
+        if (FileUtils.fileItemExistsinDir(drive.getCurrentDirectory(), newDirectoryName)) {
+			outputter.printLine("The directory with the same name already exist");
+			return;
+		}
         drive.getCurrentDirectory().add(newDirectory);
     }
 }
