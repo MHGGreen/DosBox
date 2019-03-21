@@ -37,7 +37,7 @@ public abstract class CmdTest {
      * |---subDir1
      * |   |---File1InDir1 (empty)
      * |   |---File2InDir1 (empty)
-     * |---subdir2
+     * |---subDir2
      */
 	protected void createTestFileStructure() {
 		this.drive = new Drive("C");
