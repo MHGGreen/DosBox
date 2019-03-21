@@ -5,8 +5,12 @@
 
 package command.library;
 
+import java.util.Iterator;
+
 import command.framework.Command;
+import filesystem.Directory;
 import filesystem.File;
+import filesystem.FileSystemItem;
 import interfaces.IDrive;
 import interfaces.IOutputter;
 
@@ -26,11 +30,26 @@ class CmdMkFile extends Command {
 		} else {
 			fileContent = this.getParameterAt(1);
 		}
+		if (fileItemExistsinDir(this.getDrive().getCurrentDirectory(), fileName)) {
+			outputter.printLine("The file with the same name already exist");
+			return;
+		}
 		
 		File newFile = new File(fileName, fileContent);
-		this.getDrive().getCurrentDirectory().add(newFile);
+		this.getDrive().getCurrentDirectory().add(newFile);	
 	}
 	
+	private boolean fileItemExistsinDir(Directory currentDirectory, String fileName) {
+		
+		for (Iterator iterator = currentDirectory.getContent().iterator(); iterator.hasNext();) {
+			FileSystemItem fileSysItem = (FileSystemItem) iterator.next();
+			if (fileSysItem.getName().equalsIgnoreCase(fileName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	protected boolean checkNumberOfParameters(int numberOfParametersEntered) {
 		return this.getParameterCount() > 0;
     }

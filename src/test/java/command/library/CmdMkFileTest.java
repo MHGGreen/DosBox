@@ -69,6 +69,20 @@ public class CmdMkFileTest extends CmdTest {
         File createdFile = TestHelper.getFile(drive, drive.getCurrentDirectory().getPath(), newFileName);
         assertEquals(newFileContent, createdFile.getFileContent());
     }
+    
+    @Test
+    public void CmdMkFile_WithContent_CreatesFileWithDuplicateFileName()
+    {
+        // given
+        final String newFileName = "FileInRoot1";
+        final String newFileContent = "ThisIsTheContent";
+
+        // when
+        executeCommand("mkfile " + newFileName + " " + newFileContent);
+
+        // then
+        assertEquals(numbersOfFilesBeforeTest, drive.getCurrentDirectory().getNumberOfContainedFiles());
+    }
 
     @Test
     public void CmdMkFile_NoParameters_ReportsError()
